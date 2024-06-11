@@ -24,7 +24,7 @@ Entre na pasta do projeto clonado, instale as dependências:
 ```shell
 $ cd publishers-smb-backend/ # Entre na pasta do projeto
 $ cp .env.example .env # Copie as configurações de ambiente local
-$ make install # Intale as dependências do backend e frontend
+$ make install # Intale as dependências do backend
 $ make up # Inicie o servidor backend em background
 $ make migrate # Executa as migrações do banco de dados
 ```
@@ -81,9 +81,7 @@ Mostra todos os comandos disponíveis.
 
 - [Laravel](https://laravel.com/)
 - [PHP](https://www.php.net/)
-- [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [InnertiaJS](https://inertiajs.com/)
 - [MySQL](https://www.mysql.com/)
 - [Docker](https://www.docker.com/)
 - [docker-compose](https://docs.docker.com/compose/)

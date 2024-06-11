@@ -1,4 +1,4 @@
-CONTAINER_NAME	:= backoffice-platform-app
+CONTAINER_NAME	:= publishers-smb-backend-app
 
 # targets
 .PHONY: default
