@@ -54,6 +54,14 @@ install:
 migrate:
 	@docker exec -it $(CONTAINER_NAME) php artisan migrate
 
+## Cria as chaves nescessárias.
+.PHONY: generate
+generate: generate-key
+	@docker exec -it $(CONTAINER_NAME) php artisan passport:client --personal --name=smb_front
+
+generate-key:
+	@docker exec -it $(CONTAINER_NAME) php artisan key:generate
+
 ## Interrompe e remove contêineres, redes, volumes e imagens criadas por up.
 .PHONY: stop
 stop:
