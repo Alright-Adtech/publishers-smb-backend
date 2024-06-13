@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-// use App\Http\Requests\api\auth\SocialLoginRequest;
 use Illuminate\Http\Request;
 use App\Models\LinkedSocialAccount;
 use App\Models\User;
@@ -12,7 +11,6 @@ use Illuminate\Support\Facades\Cookie;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as ProviderUser;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 
 
 class SocialLoginController extends Controller
@@ -108,8 +106,7 @@ class SocialLoginController extends Controller
         'provider_name' => $provider,
       ]);
 
-      // return $user;
-      return $providerUser;
+      return $user;
     }
   }
 }
