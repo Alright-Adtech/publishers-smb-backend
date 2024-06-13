@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\LinkedSocialAccount;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\UnauthorizedException;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Contracts\User as ProviderUser;
+
 
 class SocialLoginService extends Service
 {
@@ -29,31 +31,32 @@ class SocialLoginService extends Service
     $linkedSocialAccount = LinkedSocialAccount::query()->where('provider_name', $provider)
       ->where('provider_id', $providerUser->getId())
       ->first();
-
-    if ($linkedSocialAccount) {
+    $socialAccountAlreadyLinked = $linkedSocialAccount !== null;
+    if ($socialAccountAlreadyLinked) {
       return $linkedSocialAccount->user;
-    } else {
-      $user = null;
-
-      if ($email = $providerUser->getEmail()) {
-        $user = User::query()->where('email', $email)->first();
-      }
-
-      if (!$user) {
-        $user = User::query()->create([
-          'name' => $providerUser->getName(),
-          'email' => $providerUser->getEmail(),
-          'password' => Str::random(8),
-        ]);
-        $user->markEmailAsVerified();
-      }
-
-      $user->linkedSocialAccounts()->create([
-        'provider_id' => $providerUser->getId(),
-        'provider_name' => $provider,
-      ]);
-
-      return $user;
     }
+
+    $user = null;
+    $email = $providerUser->getEmail();
+    if ($email) {
+      $user = User::query()->where('email', $email)->first();
+    }
+    
+    $userWasNotFound = !$user;
+    if ($userWasNotFound) {
+      $user = User::query()->create([
+        'name' => $providerUser->getName(),
+        'email' => $providerUser->getEmail(),
+        'password' => Hash::make(Str::random(16)),
+      ]);
+      $user->markEmailAsVerified();
+    }
+    
+    $user->linkedSocialAccounts()->create([
+      'provider_id' => $providerUser->getId(),
+      'provider_name' => $provider,
+    ]);
+
+    return $user;
   }
 }
