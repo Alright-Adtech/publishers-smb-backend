@@ -38,7 +38,7 @@ class SocialLoginController extends Controller
         );
       }
   
-      $cookie = Cookie::make("token", $token);
+      $cookie = Cookie::make("Authorization", $token);
       return redirect(env('GOOGLE_FRONT_REDIRECT'))->withCookie($cookie);
     } catch (Exception $exception) {
       return response()->json([
