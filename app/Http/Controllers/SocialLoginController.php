@@ -26,30 +26,25 @@ class SocialLoginController extends Controller
   {
     try {
       $providerUser = Socialite::driver($provider)->user();
+      $user = $this->findOrCreate($providerUser, $provider);
+
+      auth()->login($user);
+      if (auth()->check()) {
+        $token = auth()->user()->createToken('API Token')->accessToken;
+      } else {
+        return $this->error(
+          message: 'Failed to Login try again',
+          code: 401
+        );
+      }
+  
+      $cookie = Cookie::make("token", $token);
+      return redirect(env('GOOGLE_FRONT_REDIRECT'))->withCookie($cookie);
     } catch (Exception $exception) {
       return response()->json([
         'message' => $exception->getMessage(),
       ]);
     }
-
-    if (filled($providerUser)) {
-      $user = $this->findOrCreate($providerUser, $provider);
-    } else {
-      $user = $providerUser;
-    }
-
-    auth()->login($user);
-    if (auth()->check()) {
-      $token = auth()->user()->createToken('API Token')->accessToken;
-    } else {
-      return $this->error(
-        message: 'Failed to Login try again',
-        code: 401
-      );
-    }
-
-    $cookie = Cookie::make("token", $token);
-    return redirect(env('GOOGLE_FRONT_REDIRECT'))->withCookie($cookie);
   }
 
   public function login(Request $request)
