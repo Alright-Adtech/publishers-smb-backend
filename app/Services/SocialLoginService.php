@@ -13,7 +13,7 @@ use Laravel\Socialite\Contracts\User as ProviderUser;
 
 class SocialLoginService extends Service
 {
-  public function generateTokenByProvider($provider): String
+  public function generateTokenByProvider(String $provider): String
   {
     $providerUser = Socialite::driver($provider)->user();
     $user = $this->findOrCreateUser($providerUser, $provider);
@@ -31,6 +31,7 @@ class SocialLoginService extends Service
     $linkedSocialAccount = LinkedSocialAccount::query()->where('provider_name', $provider)
       ->where('provider_id', $providerUser->getId())
       ->first();
+
     $socialAccountAlreadyLinked = $linkedSocialAccount !== null;
     if ($socialAccountAlreadyLinked) {
       return $linkedSocialAccount->user;
