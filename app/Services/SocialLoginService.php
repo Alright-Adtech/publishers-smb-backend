@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\UnauthorizedException;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Contracts\User as ProviderUser;
+use Illuminate\Support\Facades\Crypt;
 
 
 class SocialLoginService extends Service
@@ -20,7 +21,7 @@ class SocialLoginService extends Service
 
     auth()->login($user);
     if (auth()->check()) {
-      return $user->createToken('API Token')->accessToken;
+      return 'Bearer ' . $user->createToken('API Token')->accessToken;
     }
 
     throw new UnauthorizedException('Não autorizado');
@@ -59,5 +60,12 @@ class SocialLoginService extends Service
     ]);
 
     return $user;
+  }
+
+  public function decryptToken(string $token) {
+    $tokenDecrypted = Crypt::decryptString($token);
+    $posForSlipt = strpos($tokenDecrypted, '|') + 1;
+    $tokenDecrypted = substr($tokenDecrypted, $posForSlipt - strlen($tokenDecrypted));
+    return $tokenDecrypted;
   }
 }

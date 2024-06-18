@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
     ];
 
     /**
@@ -49,5 +50,10 @@ class User extends Authenticatable
     public function linkedSocialAccounts()
     {
         return $this->hasOne(LinkedSocialAccount::class);
+    }
+
+    public function websites()
+    {
+        return $this->hasOne(Website::class);
     }
 }

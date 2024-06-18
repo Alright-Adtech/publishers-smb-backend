@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\CheckClientCredentials;
+use App\Http\Middleware\Cors;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -14,7 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+      $middleware->alias([
+        'client' => CheckClientCredentials::class,
+        'cors' => Cors::class,
+      ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
       $exceptions->render(function (AuthenticationException $e, Request $request) {
