@@ -13,6 +13,14 @@ class UserRepository
     $this->user = $user;
   }
 
+  public function getById($id)
+  {
+    return $this->user
+      ->where('id', $id)
+      ->with('websites')
+      ->firstOrFail();
+  }
+
   public function update(array $data, int $id)
   {
     $user = $this->user->find($id);

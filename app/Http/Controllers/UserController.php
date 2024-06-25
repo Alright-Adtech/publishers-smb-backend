@@ -18,8 +18,11 @@ class UserController extends Controller
 
   public function get(Request $request)
   {
+    $userId = $request->user()->id;
+    $user = $this->service->getById($userId);
+
     return $this->success([
-      'user' => $request->user(),
+      'user' => $user,
     ]);
   }
 

@@ -2,17 +2,17 @@
 
 namespace App\Services;
 
-use App\Repositories\UserRepository;
+use App\Repositories\WebsiteRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
-class UserService extends Service
+class WebsiteService extends Service
 {
-  protected UserRepository $repository;
+  protected WebsiteRepository $repository;
 
-  public function __construct(UserRepository $repository)
+  public function __construct(WebsiteRepository $repository)
   {
     $this->repository = $repository;
   }
@@ -22,7 +22,21 @@ class UserService extends Service
     return $this->repository->getById($id);
   }
 
-  public function updateUser($data, $id)
+  public function createWebsite($data)
+  {
+    try {
+      DB::beginTransaction();
+      $website = $this->repository->create($data);
+      DB::commit();
+    } catch(Exception $exception) {
+      DB::rollBack();
+      throw new InvalidArgumentException($exception->getMessage());
+    }
+
+    return $website;
+  }
+
+  public function updateWebsite($data, $id)
   {
     try {
       DB::beginTransaction();
