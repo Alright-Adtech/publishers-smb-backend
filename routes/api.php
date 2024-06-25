@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserSegmentController;
 use App\Http\Controllers\WebsiteController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['cors', 'auth:api'])->group(function () {
@@ -12,6 +12,8 @@ Route::middleware(['cors', 'auth:api'])->group(function () {
 
   Route::post('/websites', [WebsiteController::class, 'new'])->name('website.new');
   Route::put('/websites/{id}', [WebsiteController::class, 'set'])->name('website.set');
+
+  Route::get('/user-segments/', [UserSegmentController::class, 'index'])->name('user-segments.index');
 });
 
 Route::get('/auth/decrypt/{token}', [SocialLoginController::class , 'decryptToken'])->name('auth.provider.decryptToken');
