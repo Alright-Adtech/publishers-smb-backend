@@ -4,18 +4,17 @@ namespace App\Repositories;
 
 use App\Models\User;
 
-class UserRepository
+class UserRepository extends Repository
 {
-  protected User $user;
 
-  public function __construct(User $user)
+  public function __construct(User $model)
   {
-    $this->user = $user;
+    parent::__construct($model);
   }
 
   public function getById($id)
   {
-    return $this->user
+    return $this->model
       ->where('id', $id)
       ->with('websites')
       ->firstOrFail();
@@ -23,7 +22,7 @@ class UserRepository
 
   public function update(array $data, int $id)
   {
-    $user = $this->user->find($id);
+    $user = $this->model->find($id);
 
     if (array_key_exists('name', $data)) $user->name = $data['name'];
     if (array_key_exists('phone', $data)) $user->phone = $data['phone'];

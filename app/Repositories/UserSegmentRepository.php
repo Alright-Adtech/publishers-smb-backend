@@ -4,16 +4,10 @@ namespace App\Repositories;
 
 use App\Models\UserSegment;
 
-class UserSegmentRepository
+class UserSegmentRepository extends Repository
 {
-  protected UserSegment $userSegment;
-
-  public function __construct(UserSegment $userSegment)
+  public function __construct(UserSegment $model)
   {
-    $this->userSegment = $userSegment;
-  }
-
-  public function getAll() {
-    return $this->userSegment->get();
+    parent::__construct($model);
   }
 }

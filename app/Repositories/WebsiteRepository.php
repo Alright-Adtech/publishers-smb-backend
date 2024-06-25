@@ -4,25 +4,17 @@ namespace App\Repositories;
 
 use App\Models\Website;
 
-class WebsiteRepository
+class WebsiteRepository extends Repository
 {
-  protected Website $website;
 
-  public function __construct(Website $website)
+  public function __construct(Website $model)
   {
-    $this->website = $website;
-  }
-
-  public function getById($id)
-  {
-    return $this->website
-      ->where('id', $id)
-      ->firstOrFail();
+    parent::__construct($model);
   }
 
   public function create(array $data)
   {
-    $website = new $this->website;
+    $website = new $this->model;
 
     $website->url = $data['url'];
     $website->user_id = $data['user_id'];
@@ -33,7 +25,7 @@ class WebsiteRepository
 
   public function update(array $data, int $id)
   {
-    $website = $this->website->find($id);
+    $website = $this->model->find($id);
 
     if (array_key_exists('state', $data)) $website->state = $data['state'];
     if (array_key_exists('city', $data)) $website->city = $data['city'];

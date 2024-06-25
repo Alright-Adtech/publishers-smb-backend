@@ -4,16 +4,11 @@ namespace App\Repositories;
 
 use App\Models\WebsiteSegment;
 
-class WebsiteSegmentRepository
+class WebsiteSegmentRepository extends Repository
 {
-  protected WebsiteSegment $model;
 
   public function __construct(WebsiteSegment $model)
   {
-    $this->model = $model;
-  }
-
-  public function getAll() {
-    return $this->model->get();
+    parent::__construct($model);
   }
 }
