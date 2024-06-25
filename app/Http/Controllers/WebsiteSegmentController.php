@@ -14,6 +14,17 @@ class WebsiteSegmentController extends Controller
     $this->service = $service;
   }
 
+  /**
+   * @OA\Get(
+   *  path="/api/website-segments",
+   *  summary="Retorna todos os segmentos dos websites.",
+   *  security={{"bearerAuth":{}}},
+   *  tags={"Segmentos dos Websites"},
+   *  @OA\Response(
+   *   response="200", description="Success"
+   *  ),
+   * )
+   */
   public function index()
   {
     $websiteSegments = $this->service->getAll();

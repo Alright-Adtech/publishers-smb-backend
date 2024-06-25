@@ -1,0 +1,56 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Publishers SMB",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/user-segments": {
+            "get": {
+                "tags": [
+                    "Segmentos dos Usuários"
+                ],
+                "summary": "Retorna todos os segmentos dos usuários.",
+                "operationId": "8361b9a5090615c5857ab96bb3ef20d0",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/website-segments": {
+            "get": {
+                "tags": [
+                    "Segmentos dos Websites"
+                ],
+                "summary": "Retorna todos os segmentos dos websites.",
+                "operationId": "76381e5c930ba019bbd4c58e5fe9e2bd",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
