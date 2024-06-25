@@ -7,9 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class WebsiteSegment extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $fillable = [
-      'title',
+  protected $fillable = [
+    'title',
+  ];
+
+  protected $hidden = [
+    'created_at',
+    'updated_at',
   ];
 }

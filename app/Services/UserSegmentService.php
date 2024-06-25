@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Repositories\UserSegmentsRepository;
+use App\Repositories\UserSegmentRepository;
 
 class UserSegmentService extends Service
 {
-  protected UserSegmentsRepository $repository;
+  protected UserSegmentRepository $repository;
 
-  public function __construct(UserSegmentsRepository $repository)
+  public function __construct(UserSegmentRepository $repository)
   {
     $this->repository = $repository;
   }

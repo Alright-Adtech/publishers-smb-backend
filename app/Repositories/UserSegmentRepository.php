@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\UserSegment;
 
-class UserSegmentsRepository
+class UserSegmentRepository
 {
   protected UserSegment $userSegment;
 
