@@ -32,9 +32,33 @@ class SocialLoginController extends Controller
     return redirect(env('GOOGLE_FRONT_REDIRECT'))->withCookie($cookie);
   }
 
-  public function decryptToken(Request $request, string $token) {
+  /**
+   * @OA\Post(
+   *  path="/api/auth/decrypt",
+   *  summary="Descriptografa token de autenticação.",
+   *  tags={"Auth"},
+   *  @OA\RequestBody(
+   *   required=true,
+   *   @OA\MediaType(
+   *    mediaType="application/json",
+   *    @OA\Schema(
+   *     @OA\Property(property="token", type="string", description="Token criptografado.")
+   *    )
+   *   )
+   *  ),
+   *  @OA\Response(
+   *   response="200", description="Sucesso", @OA\JsonContent()
+   *  ),
+   * )
+   */
+  public function decryptToken(Request $request)
+  {
+    $request->validate([
+      'token' => 'required|string',
+    ]);
+    $token = $request->input('token');
     $tokenDecrypted = $this->service->decryptToken($token);
-  
+
     return $this->success([
       'token' => $tokenDecrypted,
     ]);

@@ -14,9 +14,9 @@ Route::middleware(['cors', 'auth:api'])->group(function () {
   Route::post('/websites', [WebsiteController::class, 'new'])->name('website.new');
   Route::put('/websites/{id}', [WebsiteController::class, 'set'])->name('website.set');
 
-  Route::get('/user-segments/', [UserSegmentController::class, 'index'])->name('user-segments.index');
+  Route::get('/user-segments', [UserSegmentController::class, 'index'])->name('user-segments.index');
 
-  Route::get('/website-segments/', [WebsiteSegmentController::class, 'index'])->name('website-segments.index');
+  Route::get('/website-segments', [WebsiteSegmentController::class, 'index'])->name('website-segments.index');
 });
 
-Route::get('/auth/decrypt/{token}', [SocialLoginController::class , 'decryptToken'])->name('auth.provider.decryptToken');
+Route::post('/auth/decrypt', [SocialLoginController::class , 'decryptToken'])->name('auth.provider.decryptToken');

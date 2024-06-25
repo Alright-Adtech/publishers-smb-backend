@@ -17,11 +17,11 @@ class UserSegmentController extends Controller
   /**
    * @OA\Get(
    *  path="/api/user-segments",
-   *  summary="Retorna todos os segmentos dos usuários.",
+   *  summary="Retorna todos os segmentos de usuário.",
    *  security={{"bearerAuth":{}}},
-   *  tags={"Segmentos dos Usuários"},
+   *  tags={"Segmentos de Usuário"},
    *  @OA\Response(
-   *   response="200", description="Success"
+   *   response="200", description="Sucesso"
    *  ),
    * )
    */

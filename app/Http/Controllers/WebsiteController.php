@@ -15,8 +15,27 @@ class WebsiteController extends Controller
   {
     $this->service = $service;
   }
-  
 
+  /**
+   * @OA\Post(
+   *  path="/api/websites",
+   *  summary="Criar novo website para usuário logado.",
+   *  security={{"bearerAuth":{}}},
+   *  tags={"Websites"},
+   *  @OA\RequestBody(
+   *   required=true,
+   *   @OA\MediaType(
+   *    mediaType="application/json",
+   *    @OA\Schema(
+   *     @OA\Property(property="url", type="string", description="URL do website."),
+   *    )
+   *   )
+   *  ),
+   *  @OA\Response(
+   *   response="200", description="Sucesso"
+   *  ),
+   * )
+   */
   public function new(Request $request)
   {
     $request->validate([
@@ -32,6 +51,37 @@ class WebsiteController extends Controller
     ]);
   }
 
+  /**
+   * @OA\Put(
+   *  path="/api/websites/{id}",
+   *  summary="Altera os dados do usuário.",
+   *  security={{"bearerAuth":{}}},
+   *  tags={"Websites"},
+   *  @OA\PathParameter(
+   *   name="id",
+   *   description="ID do website",
+   *   required=true
+   *  ),
+   *  @OA\RequestBody(
+   *   required=true,
+   *   @OA\MediaType(
+   *    mediaType="application/json",
+   *    @OA\Schema(
+   *     @OA\Property(property="state", type="string", description="Estado de atuação."),
+   *     @OA\Property(property="city", type="string", description="Principal cidade de atuação."),
+   *     @OA\Property(property="views", type="integer", description="Quantidade máxima de audiência do website."),
+   *     @OA\Property(property="website_segment_id", type="integer", description="Segmento do website."),
+   *    )
+   *   )
+   *  ),
+   *  @OA\Response(
+   *   response="200", description="Sucesso"
+   *  ),
+   *  @OA\Response(
+   *   response="403", description="Usuário não tem permissões de alterar website."
+   *  ),
+   * )
+   */
   public function set(WebsitePutRequest $request, int $websiteId)
   {
     $website = $this->service->getById($websiteId);
@@ -40,7 +90,7 @@ class WebsiteController extends Controller
     $userCannotChangeWebsite = $website->user_id !== $userId;
     if ($userCannotChangeWebsite) {
       return $this->error('O usuário logado não pode alterar os dados do website', 403);
-    }    
+    }
 
     $data = $request->only([
       'state',

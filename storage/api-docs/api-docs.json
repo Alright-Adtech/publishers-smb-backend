@@ -5,16 +5,209 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/auth/decrypt": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Descriptografa token de autenticação.",
+                "operationId": "326cdc8323e1924665759065ac5d3511",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "token": {
+                                        "description": "Token criptografado.",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "get": {
+                "tags": [
+                    "Usuário"
+                ],
+                "summary": "Retorna os dados do usuário.",
+                "description": "Retorna os dados do usuário incluindo todos os websites.",
+                "operationId": "22ea85303059d4f2d15556c1c9fd65d2",
+                "responses": {
+                    "200": {
+                        "description": "Sucesso"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Usuário"
+                ],
+                "summary": "Altera os dados do usuário.",
+                "operationId": "d590cebf4ab1cfb349ac3e820195899a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Nome do usuário",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "description": "Telefone do usuário",
+                                        "type": "string"
+                                    },
+                                    "signed_terms_of_use": {
+                                        "description": "Termos de uso aceito pelo usuário.",
+                                        "type": "boolean"
+                                    },
+                                    "user_segment_id": {
+                                        "description": "Segmento do usuário.",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sucesso"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/user-segments": {
             "get": {
                 "tags": [
-                    "Segmentos dos Usuários"
+                    "Segmentos de Usuário"
                 ],
-                "summary": "Retorna todos os segmentos dos usuários.",
+                "summary": "Retorna todos os segmentos de usuário.",
                 "operationId": "8361b9a5090615c5857ab96bb3ef20d0",
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Sucesso"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/websites": {
+            "post": {
+                "tags": [
+                    "Websites"
+                ],
+                "summary": "Criar novo website para usuário logado.",
+                "operationId": "7cd55e5465e158265193e2589e1f16ea",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "url": {
+                                        "description": "URL do website.",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sucesso"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/websites/{id}": {
+            "put": {
+                "tags": [
+                    "Websites"
+                ],
+                "summary": "Altera os dados do usuário.",
+                "operationId": "62419f0f59973984dca61c2c9a07f25f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do website",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "state": {
+                                        "description": "Estado de atuação.",
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "description": "Principal cidade de atuação.",
+                                        "type": "string"
+                                    },
+                                    "views": {
+                                        "description": "Quantidade máxima de audiência do website.",
+                                        "type": "integer"
+                                    },
+                                    "website_segment_id": {
+                                        "description": "Segmento do website.",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sucesso"
+                    },
+                    "403": {
+                        "description": "Usuário não tem permissões de alterar website."
                     }
                 },
                 "security": [
@@ -27,13 +220,13 @@
         "/api/website-segments": {
             "get": {
                 "tags": [
-                    "Segmentos dos Websites"
+                    "Segmentos de Website"
                 ],
-                "summary": "Retorna todos os segmentos dos websites.",
+                "summary": "Retorna todos os segmentos de website.",
                 "operationId": "76381e5c930ba019bbd4c58e5fe9e2bd",
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Sucesso"
                     }
                 },
                 "security": [

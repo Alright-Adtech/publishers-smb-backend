@@ -17,11 +17,11 @@ class WebsiteSegmentController extends Controller
   /**
    * @OA\Get(
    *  path="/api/website-segments",
-   *  summary="Retorna todos os segmentos dos websites.",
+   *  summary="Retorna todos os segmentos de website.",
    *  security={{"bearerAuth":{}}},
-   *  tags={"Segmentos dos Websites"},
+   *  tags={"Segmentos de Website"},
    *  @OA\Response(
-   *   response="200", description="Success"
+   *   response="200", description="Sucesso"
    *  ),
    * )
    */
