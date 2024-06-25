@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'signed_terms_of_use',
     ];
 
     /**
@@ -47,13 +49,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function linkedSocialAccounts()
+    public function linkedSocialAccounts(): HasMany
     {
-        return $this->hasOne(LinkedSocialAccount::class);
+        return $this->hasMany(LinkedSocialAccount::class);
     }
 
-    public function websites()
+    public function websites(): HasMany
     {
-        return $this->hasOne(Website::class);
+        return $this->hasMany(Website::class);
+    }
+
+    public function userSegment(): HasOne
+    {
+        return $this->hasOne(UserSegment::class);
     }
 }
