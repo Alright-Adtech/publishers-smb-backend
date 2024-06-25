@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'phone',
         'signed_terms_of_use',
+        'watched_the_intro_video',
     ];
 
     /**
