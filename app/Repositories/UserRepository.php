@@ -17,6 +17,8 @@ class UserRepository extends Repository
     return $this->model
       ->where('id', $id)
       ->with('websites')
+      ->with('websites.histories')
+      ->with('websites.histories.status')
       ->firstOrFail();
   }
 

@@ -16,6 +16,7 @@ class Website extends Model
       'state',
       'city',
       'views',
+      'user_id',
   ];
 
     public function user(): BelongsTo

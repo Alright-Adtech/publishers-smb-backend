@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class History extends Model
 {
     use HasFactory;
+    
+
+    protected $fillable = [
+      'website_id',
+  ];
 
     public function website()
     {

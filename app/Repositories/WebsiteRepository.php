@@ -14,13 +14,16 @@ class WebsiteRepository extends Repository
 
   public function create(array $data)
   {
-    $website = new $this->model;
+    $website = Website::create([
+      'url' =>  $data['url'],
+      'user_id' => $data['user_id'],
+    ]);
 
-    $website->url = $data['url'];
-    $website->user_id = $data['user_id'];
-    $website->save();
+    // $website->url = $data['url'];
+    // $website->user_id = $data['user_id'];
+    // $website->save();
 
-    return $website->fresh();
+    return $website;
   }
 
   public function update(array $data, int $id)

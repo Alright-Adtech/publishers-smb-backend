@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Enums\StatusSlugEnum;
+use App\Repositories\HistoryRepository;
+use App\Repositories\StatusRepository;
 use App\Repositories\WebsiteRepository;
 use Exception;
 use Illuminate\Http\Request;
@@ -11,10 +14,15 @@ use InvalidArgumentException;
 class WebsiteService extends Service
 {
   protected WebsiteRepository $repository;
+  protected StatusRepository $statusRepository;
+  protected HistoryRepository $historyRepository;
 
-  public function __construct(WebsiteRepository $repository)
+
+  public function __construct(WebsiteRepository $repository, StatusRepository $statusRepository, HistoryRepository $historyRepository)
   {
     $this->repository = $repository;
+    $this->statusRepository = $statusRepository;
+    $this->historyRepository = $historyRepository;
   }
 
   public function getById(int $id)
@@ -26,14 +34,23 @@ class WebsiteService extends Service
   {
     try {
       DB::beginTransaction();
+
+      $status = $this->statusRepository->getBySlug(StatusSlugEnum::Started);
       $website = $this->repository->create($data);
+      $this->historyRepository->create([
+        'website_id' => $website->id,
+        'status_id' => $status->id,
+      ]);
+
       DB::commit();
-    } catch(Exception $exception) {
+    } catch (Exception $exception) {
       DB::rollBack();
       throw new InvalidArgumentException($exception->getMessage());
     }
 
-    return $website;
+    return $website
+      ->load('histories')
+      ->load('histories.status');
   }
 
   public function updateWebsite($data, $id)
@@ -42,7 +59,7 @@ class WebsiteService extends Service
       DB::beginTransaction();
       $user = $this->repository->update($data, $id);
       DB::commit();
-    } catch(Exception $exception) {
+    } catch (Exception $exception) {
       DB::rollBack();
       throw new InvalidArgumentException($exception->getMessage());
     }
