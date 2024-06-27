@@ -24,8 +24,8 @@ abstract class Controller
 
   protected function error(String $message, Int $code)
   {
-    return response(status: $code)->json([
+    return response()->json([
       'message' => $message,
-    ]);
+    ], $code);
   }
 }

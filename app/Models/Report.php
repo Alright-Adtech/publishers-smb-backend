@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Status extends Model
+class Report extends Model
 {
   use HasFactory;
 
   protected $fillable = [
-    'slug',
-    'description',
+    'revenue',
+    'impressions',
+    'viewability',
+    'cpm',
+    'currency',
+    'date',
   ];
 }

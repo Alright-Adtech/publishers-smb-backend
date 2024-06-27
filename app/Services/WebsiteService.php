@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Enums\StatusSlugEnum;
+use App\Models\User;
 use App\Repositories\HistoryRepository;
 use App\Repositories\StatusRepository;
 use App\Repositories\WebsiteRepository;
-use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
@@ -65,5 +65,11 @@ class WebsiteService extends Service
     }
 
     return $user;
+  }
+
+  public function checkWithWebsiteIsTheUser(User $user, $websiteId): bool
+  {
+    $website = $this->getById($websiteId);
+    return $website->user_id != $user->id;
   }
 }

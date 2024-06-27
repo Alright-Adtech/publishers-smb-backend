@@ -84,11 +84,8 @@ class WebsiteController extends Controller
    */
   public function set(WebsitePutRequest $request, int $websiteId)
   {
-    $website = $this->service->getById($websiteId);
-    $userId = $request->user()->id;
-
-    $userCannotChangeWebsite = $website->user_id !== $userId;
-    if ($userCannotChangeWebsite) {
+    $user = $request->user();
+    if ($this->service->checkWithWebsiteIsTheUser($user, $websiteId)) {
       return $this->error('O usuário logado não pode alterar os dados do website', 403);
     }
 

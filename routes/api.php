@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserSegmentController;
@@ -13,6 +14,9 @@ Route::middleware(['cors', 'auth:api'])->group(function () {
 
   Route::post('/websites', [WebsiteController::class, 'new'])->name('website.new');
   Route::put('/websites/{id}', [WebsiteController::class, 'set'])->name('website.set');
+  Route::get('/websites/{website_id}/reports/{limit}', [ReportController::class, 'getByWebsiteAndWithLimit'])->name('website.reports.getByWebsiteAndWithLimit');
+
+
 
   Route::get('/user-segments', [UserSegmentController::class, 'index'])->name('user-segments.index');
 

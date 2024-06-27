@@ -10,27 +10,32 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Website extends Model
 {
-    use HasFactory;
-    protected $fillable = [
-      'url',
-      'state',
-      'city',
-      'views',
-      'user_id',
+  use HasFactory;
+  protected $fillable = [
+    'url',
+    'state',
+    'city',
+    'views',
+    'user_id',
   ];
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
+  public function user(): BelongsTo
+  {
+    return $this->belongsTo(User::class);
+  }
 
-    public function histories(): HasMany
-    {
-        return $this->hasMany(History::class);
-    }
-    
-    public function websiteSegment(): HasOne
-    {
-        return $this->hasOne(WebsiteSegment::class);
-    }
+  public function histories(): HasMany
+  {
+    return $this->hasMany(History::class);
+  }
+
+  public function websiteSegment(): HasOne
+  {
+    return $this->hasOne(WebsiteSegment::class);
+  }
+
+  public function reports(): HasMany
+  {
+    return $this->hasMany(Report::class);
+  }
 }
