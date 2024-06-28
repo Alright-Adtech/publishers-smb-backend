@@ -31,6 +31,8 @@ services:
     volumes:
       - ./:/var/www
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - /etc/letsencrypt/live/smb-api.alright.network/fullchain.pem:/etc/nginx/ssl/fullchain.pem:ro
+      - /etc/letsencrypt/live/smb-api.alright.network/privkey.pem:/etc/nginx/ssl/privkey.pem:ro
     networks:
       - app-network
 
