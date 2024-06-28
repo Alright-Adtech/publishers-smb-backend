@@ -72,6 +72,11 @@ generate-key:
 stop:
 	@docker-compose down
 
+## Interrompe e remove contêineres, redes, volumes e imagens criadas por up em produção.
+.PHONY: stop
+stop:
+	@docker-compose -f ./docker-compose.prod.yml down
+
 ## Mostrar registros de contêiner da aplicação (app).
 .PHONY: logs
 logs:
@@ -80,7 +85,7 @@ logs:
 ## Interaja dentro do contêiner da aplicação (app).
 .PHONY: terminal
 terminal:
-	@docker container exec -it $(CONTAINER_NAME) sh
+	@  $(CONTAINER_NAME) sh
 
 ## Inspecione o contêiner da aplicação (app).
 .PHONY: inspect
