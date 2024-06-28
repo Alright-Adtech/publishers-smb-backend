@@ -29,7 +29,7 @@ class SocialLoginController extends Controller
     $token = $this->service->generateTokenByProvider($provider);
     $cookie = cookie("token", $token, 60 * 24 * 3, null, null, null, false);
 
-    return Redirect(env('GOOGLE_FRONT_REDIRECT'))->withCookie($cookie);
+    return new RedirectResponse(env('GOOGLE_FRONT_REDIRECT'))->withCookie($cookie);
   }
 
   /**
