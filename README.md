@@ -78,6 +78,10 @@ Inspecione o contêiner da aplicação `app`.
 
 Instala as dependências do backend.
 
+### `make up`
+
+Constrói, (re)cria, inicia e anexa contêineres para um serviço em produção.
+
 ### `make help`
 
 Mostra todos os comandos disponíveis.
@@ -86,7 +90,6 @@ Mostra todos os comandos disponíveis.
 
 - [Laravel](https://laravel.com/)
 - [PHP](https://www.php.net/)
-- [TypeScript](https://www.typescriptlang.org/)
 - [MySQL](https://www.mysql.com/)
 - [Docker](https://www.docker.com/)
 - [docker-compose](https://docs.docker.com/compose/)

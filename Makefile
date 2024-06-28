@@ -44,6 +44,11 @@ help:
 up:
 	@docker-compose up -d
 
+## Constrói, (re)cria, inicia e anexa contêineres para um serviço em produção.
+.PHONY: up
+up:
+	@docker-compose -f ./docker-compose.prod.yml up -d
+
 ## Instala todas as dependências no backend e frontend.
 .PHONY: install
 install:

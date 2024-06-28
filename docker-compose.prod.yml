@@ -5,7 +5,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./docker/php/Dockerfile
+      dockerfile: ./docker/php/Dockerfile.prod
     image: publishers-smb-backend/php
     container_name: publishers-smb-backend-app
     restart: unless-stopped
@@ -31,25 +31,8 @@ services:
     volumes:
       - ./:/var/www
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
-    networks:
-      - app-network
-
-  db:
-    image: mysql:5.7
-    platform: linux/x86_64
-    container_name: publishers-smb-backend-db
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: publishers_smb_db
-      MYSQL_ROOT_PASSWORD: your_mysql_root_password
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - dbdata:/var/lib/mysql/
-      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - /etc/letsencrypt/live/smb-api.alright.network/fullchain.pem:/etc/nginx/ssl/fullchain.pem:ro
+      - /etc/letsencrypt/live/smb-api.alright.network/privkey.pem:/etc/nginx/ssl/privkey.pem:ro
     networks:
       - app-network
 
