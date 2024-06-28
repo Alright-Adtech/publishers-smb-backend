@@ -45,8 +45,8 @@ up:
 	@docker-compose up -d
 
 ## Constrói, (re)cria, inicia e anexa contêineres para um serviço em produção.
-.PHONY: up
-up:
+.PHONY: up-prod
+up-prod:
 	@docker-compose -f ./docker-compose.prod.yml up -d
 
 ## Instala todas as dependências no backend e frontend.
@@ -73,8 +73,8 @@ stop:
 	@docker-compose down
 
 ## Interrompe e remove contêineres, redes, volumes e imagens criadas por up em produção.
-.PHONY: stop
-stop:
+.PHONY: stop-prod
+stop-prod:
 	@docker-compose -f ./docker-compose.prod.yml down
 
 ## Mostrar registros de contêiner da aplicação (app).
