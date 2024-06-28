@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\SocialLoginService;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
@@ -20,12 +19,12 @@ class SocialLoginController extends Controller
     $this->service = $service;
   }
 
-  public function redirect(String $provider): RedirectResponse
+  public function redirect(String $provider)
   {
     return Socialite::driver($provider)->redirect();
   }
 
-  public function callback(String $provider): RedirectResponse
+  public function callback(String $provider)
   {
     $token = $this->service->generateTokenByProvider($provider);
     $cookie = cookie("token", $token, 60 * 24 * 3, null, null, null, false);
