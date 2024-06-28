@@ -42,8 +42,7 @@ class SocialLoginController extends Controller
     // Define o código de status de redirecionamento
     $response->setStatusCode(302);
     
-
-    return ;
+    return $response;
   }
 
   /**
