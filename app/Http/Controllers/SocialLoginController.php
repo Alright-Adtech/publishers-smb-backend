@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\SocialLoginService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
@@ -19,17 +20,18 @@ class SocialLoginController extends Controller
     $this->service = $service;
   }
 
-  public function redirect(String $provider)
+  public function redirect(String $provider): RedirectResponse
   {
     return Socialite::driver($provider)->redirect();
   }
 
-  public function callback(String $provider)
+  public function callback(String $provider): RedirectResponse
   {
     $token = $this->service->generateTokenByProvider($provider);
     $cookie = cookie("token", $token, 60 * 24 * 3, null, null, null, false);
-
-    return Redirect::away(env('GOOGLE_FRONT_REDIRECT'))->withCookie($cookie);
+    $response = new RedirectResponse(env('GOOGLE_FRONT_REDIRECT'));
+    $response->withCookie($cookie);
+    return $response;
   }
 
   /**
